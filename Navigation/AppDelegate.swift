@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  Navigation
 //
-//  Created by MacBook on 19.02.2022.
+//  Created by Руфат Багирли on 19.02.2022.
 //
 
 import UIKit

@@ -21,7 +21,7 @@ class FeedViewController: UIViewController {
         postButton.backgroundColor = .systemRed
         postButton.layer.borderWidth = 1
         postButton.layer.cornerRadius = 5
-        postButton.frame = CGRect(x: 10, y: 200, width: 400, height: 50)
+        postButton.frame = CGRect(x: 20, y: 200, width: 300, height: 50)
         postButton.setTitle("Пост", for: .normal)
         postButton.addTarget(self, action: #selector(showPost), for: .touchUpInside)
         view.addSubview(postButton)

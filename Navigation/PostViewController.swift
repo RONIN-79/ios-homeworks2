@@ -25,6 +25,8 @@ class PostViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Инфо", style: .done, target: self, action: #selector(showInfo))
 
         // Do any additional setup after loading the view.
+        
+        
     }
     
     @objc private func showInfo() {

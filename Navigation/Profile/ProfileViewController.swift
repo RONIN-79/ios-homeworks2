@@ -28,20 +28,17 @@ class ProfileViewController: UIViewController {
     }
 
     private func addConstraints() {
-    var constraints = [NSLayoutConstraint]()
-    
-    constraints.append(profileHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor))
-    constraints.append(profileHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor))
-    constraints.append(profileHeaderView.bottomAnchor.constraint(equalTo: view.bottomAnchor))
-    constraints.append(profileHeaderView.topAnchor.constraint(equalTo: view.topAnchor))
-    
-    NSLayoutConstraint.activate(constraints)
+        var constraints = [NSLayoutConstraint]()
+        
+        constraints.append(profileHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor))
+        constraints.append(profileHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor))
+        constraints.append(profileHeaderView.bottomAnchor.constraint(equalTo: view.bottomAnchor))
+        constraints.append(profileHeaderView.topAnchor.constraint(equalTo: view.topAnchor))
+        
+        NSLayoutConstraint.activate(constraints)
     }
 
-    override func viewWillLayoutSubviews() {
-    let profileView = ProfileHeaderView()
-    profileView.frame = self.view.frame
-    }
+
     
 
 

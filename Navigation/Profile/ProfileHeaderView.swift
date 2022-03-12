@@ -1,0 +1,106 @@
+//
+//  ProfileHeaderView.swift
+//  Navigation
+//
+//  Created by MacBook on 20.02.2022.
+//
+
+import UIKit
+
+class ProfileHeaderView: UIView {
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupView()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tap(_:)))
+        self.addGestureRecognizer(tap)
+    
+    }
+    
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    let textField = UITextField(frame: CGRect(x: 200, y: 360, width: 190, height: 50))
+    let showButton = UIButton(frame: CGRect(x: 55, y: 400, width: 300, height: 60))
+    let status = UITextView(frame: CGRect(x: 200, y: 290, width: 190, height: 50))
+
+    
+    private func setupView() {
+        
+        let profileImage = UIImage(named: "portrait")
+        let profileImageView = UIImageView(image: profileImage)
+        profileImageView.frame = CGRect(x: 35, y: 150, width: 150, height: 200)
+        self.addSubview(profileImageView)
+
+        
+        let name = UILabel(frame: CGRect(x: 215, y: 190, width: 200, height: 80))
+        name.text = "Ждун"
+        name.font = .systemFont(ofSize: 35, weight: .bold)
+        name.adjustsFontSizeToFitWidth = true
+        name.minimumScaleFactor = 0.5
+        self.addSubview(name)
+        
+        textField.placeholder = "Укажите статус..."
+        textField.adjustsFontSizeToFitWidth = true
+        textField.minimumFontSize = 0.5
+        textField.returnKeyType = .done
+        textField.autocapitalizationType = .words
+        textField.font = .systemFont(ofSize: 15)
+        textField.textColor = .systemGray2
+        textField.backgroundColor = .systemGray4
+        textField.borderStyle = .roundedRect
+        textField.returnKeyType = .next
+        textField.keyboardType = .default
+        textField.clearButtonMode = .always
+        textField.alpha = 0
+        self.addSubview(textField)
+
+        showButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+        showButton.setTitle("Создать статус", for: .normal)
+        showButton.backgroundColor = .systemBlue
+        showButton.layer.cornerRadius = 7
+        showButton.layer.shadowColor = UIColor.black.cgColor
+        showButton.layer.shadowOffset = CGSize(width: 5, height: 5)
+        showButton.layer.shadowRadius = 5
+        showButton.layer.shadowOpacity = 0.3
+        self.addSubview(showButton)
+
+        
+        status.backgroundColor = .systemGray2
+        status.font = .systemFont(ofSize: 20)
+        status.textColor = .systemGray
+        status.text = "статус"
+        self.addSubview(status)
+    }
+
+    @objc func buttonPressed() {
+        status.text = textField.text
+        status.textColor = .black
+        textField.text = ""
+        UIView.animate(withDuration: 1.0) {
+            self.showButton.frame = CGRect(x: 55, y: 428, width: 300, height: 60)
+            self.textField.alpha = 1
+            self.endEditing(true)
+            if self.status.hasText {
+                self.showButton.setTitle("Изменить статус", for: .normal)
+                self.textField.alpha = 0
+                self.showButton.frame = CGRect(x: 55, y: 400, width: 300, height: 60)
+            }
+        }
+    }
+    @objc func tap(_ sender: Any) {
+        textField.resignFirstResponder()
+    }
+
+    /*
+    // Only override draw() if you perform custom drawing.
+    // An empty implementation adversely affects performance during animation.
+    override func draw(_ rect: CGRect) {
+        // Drawing code
+    }
+    */
+
+}
+

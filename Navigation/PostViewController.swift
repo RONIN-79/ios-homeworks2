@@ -2,7 +2,7 @@
 //  PostViewController.swift
 //  Navigation
 //
-//  Created by MacBook on 20.02.2022.
+//  Created by Руфат Багирли on 20.02.2022.
 //
 
 import UIKit

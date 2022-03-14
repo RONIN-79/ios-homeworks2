@@ -2,7 +2,7 @@
 //  PostViewController.swift
 //  Navigation
 //
-//  Created by MacBook on 20.02.2022.
+//  Created by Руфат Багирли on 20.02.2022.
 //
 
 import UIKit
@@ -13,26 +13,41 @@ class PostViewController: UIViewController {
     
     override func loadView() {
         view = UIView()
-        view.backgroundColor = .green
+        view.backgroundColor = .lightGray
 
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.title = post.title
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Инфо", style: .done, target: self, action: #selector(showInfo))
 
-        // Do any additional setup after loading the view.
+        //self.title = post.title
         
-        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Info", style: .done, target: self, action: #selector(showInfo))
     }
     
     @objc private func showInfo() {
         let infoVC = InfoViewController()
         self.present(infoVC, animated: true)
     }
+    
+  /*  override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .systemOrange
+        let myPost = Post()
+        let titleLabel = UILabel()
+        titleLabel.text = myPost.title
+        titleLabel.font = UIFont.systemFont(ofSize: 20)
+        navigationItem.titleView = titleLabel
+        let infoImage = UIImage(named: "info")
+        let infoButton = UIBarButtonItem(image: infoImage , style: .done, target: self, action: #selector(buttonInfoClicked))
+        navigationItem.rightBarButtonItem = infoButton
+    }
+    
+    @objc func buttonInfoClicked() {
+        let infoViewController = InfoViewController()
+        navigationController?.pushViewController(infoViewController, animated: true)
+    } */
+
 
     /*
     // MARK: - Navigation

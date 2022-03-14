@@ -9,39 +9,169 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    private let profileHeaderView: UIView = {
-        let profileHearderView = ProfileHeaderView()
+    private lazy var profileHeaderView: ProfileHeaderView = {
+        let profileHearderView = ProfileHeaderView(frame: .zero)
         profileHearderView.translatesAutoresizingMaskIntoConstraints = false
         profileHearderView.backgroundColor = .lightGray
         return profileHearderView
-    } ()
+    }()
+    
+    private lazy var setTitleButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Установить заголовок", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .systemBlue
+        button.layer.cornerRadius = 4
+        button.addTarget(self, action: #selector(didTapSetTitleButton), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "DefaultCell")
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "ArticleCell")
+        tableView.backgroundColor = .clear
+        tableView.backgroundColor = .systemGray6
+        tableView.layer.borderColor = UIColor.lightGray.cgColor
+        tableView.layer.borderWidth = 0.5
+        return tableView
+    }()
+    
+    private var heightConstraint: NSLayoutConstraint?
+    
+    private var dataSource: [Post] = []
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Профиль"
         view.addSubview(profileHeaderView)
-        addConstraints()
+        profileHeaderViewSetup()
+        setTitleButtonSetup()
+        setupTableView()
+        addDataSource()
+        print(dataSource.count)
 
 
         // Do any additional setup after loading the view.
     }
-
-    private func addConstraints() {
-    var constraints = [NSLayoutConstraint]()
     
-    constraints.append(profileHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor))
-    constraints.append(profileHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor))
-    constraints.append(profileHeaderView.bottomAnchor.constraint(equalTo: view.bottomAnchor))
-    constraints.append(profileHeaderView.topAnchor.constraint(equalTo: view.topAnchor))
+    private func profileHeaderViewSetup() {
+        self.view.backgroundColor = .white
+        self.view.addSubview(self.profileHeaderView)
+       // self.view.addSubview(setTitleButton)
+        
+        let topConstraint = self.profileHeaderView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor)
+        let leadingConstraint = self.profileHeaderView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor)
+        let trailingConstraint = self.profileHeaderView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
+        self.heightConstraint = self.profileHeaderView.heightAnchor.constraint(equalToConstant: 220)
+        
+        NSLayoutConstraint.activate([
+            topConstraint,
+            leadingConstraint,
+            trailingConstraint,
+            self.heightConstraint
+        ].compactMap({$0}))
+    }
     
-    NSLayoutConstraint.activate(constraints)
+    private func setTitleButtonSetup() {
+        self.view.addSubview(setTitleButton)
+        
+        let setTitleButtonHeightConstraint = self.setTitleButton.heightAnchor.constraint(equalToConstant: 50)
+        let setTitleButtonBottomConstraint = self.setTitleButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
+        let setTitleButtonLeadingConstraint = self.setTitleButton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor)
+        let setTitleButtonTrailingConstraint = self.setTitleButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
+        
+        NSLayoutConstraint.activate([
+            setTitleButtonHeightConstraint,
+            setTitleButtonBottomConstraint,
+            setTitleButtonLeadingConstraint,
+            setTitleButtonTrailingConstraint
+        ])
     }
+    
+    private func setupTableView() {
+        self.view.addSubview(self.tableView)
+        
+        let tableViewTopConstraint = self.tableView.topAnchor.constraint(equalTo: self.profileHeaderView.bottomAnchor)
+        let tableViewBottomConstraint = self.tableView.bottomAnchor.constraint(equalTo: self.setTitleButton.topAnchor)
+        let tableViewLeadingConstraint = self.tableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 10)
+        let tableViewTrailingConstraint = self.tableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -10)
+        
+        NSLayoutConstraint.activate([
+            tableViewTopConstraint,
+            tableViewBottomConstraint,
+            tableViewLeadingConstraint,
+            tableViewTrailingConstraint
+        ])
 
-    override func viewWillLayoutSubviews() {
-    let profileView = ProfileHeaderView()
-    profileView.frame = self.view.frame
     }
+    
+    private func addDataSource() {
+        self.dataSource.append(.init(author: "ОБМЕН", description: "Обмен газа на недвижимость", image: "Pic1", likes: 25, views: 30))
+        self.dataSource.append(.init(author: "McDonalds", description: "Ребрендинг Макдональдса", image: "Pic2", likes: 23, views: 28))
+        self.dataSource.append(.init(author: "ЗДОРОВЬЕ!", description: "С уходом иностранных компаний, мы точно будем здоровыми", image: "Pic3", likes: 15, views: 18))
+        self.dataSource.append(.init(author: "McDonalds-2", description: "Ребрендинг Макдональдса часть 2", image: "Pic4", likes: 30, views: 30))
+    }
+    
+    @objc func didTapSetTitleButton() {
+        let ac = UIAlertController(title: "Установить заголовок", message: "Ввести новый заголовок", preferredStyle: .alert)
+        ac.addTextField()
+        
+        let okAction = UIAlertAction(title: "Ок", style: .default) { [weak self, weak ac] _ in
+            guard let newTitle = ac?.textFields?[0].text else {return}
+            if newTitle.isEmpty {
+                let ac = UIAlertController(title: "Введите что-нибудь", message: nil, preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Ок", style: .default, handler: nil)
+                ac.addAction(okAction)
+                self?.present(ac, animated: true)
+            }
+            self?.profileHeaderView.changeTitle(title: newTitle)
+        }
+        ac.addAction(okAction)
+        
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+        ac.addAction(cancelAction)
+        
+        present(ac, animated: true)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+}
+
+extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.dataSource.count
+    }
+            
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ArticleCell", for: indexPath) as? PostTableViewCell else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "DefaultCell", for: indexPath)
+            return cell
+        }
+        let article = self.dataSource[indexPath.row]
+        let viewModel = PostTableViewCell.ViewModel(author: article.author,
+                                                    image: article.image,
+                                                    description: article.description,
+                                                    likes: article.likes,
+                                                    views: article.views)
+        cell.setup(with: viewModel)
+        return cell
+    }
+}
+
+
+
+
+
     
 
 
@@ -55,4 +185,4 @@ class ProfileViewController: UIViewController {
     }
     */
 
-}
+

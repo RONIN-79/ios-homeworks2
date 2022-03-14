@@ -9,44 +9,68 @@ import UIKit
 
 class FeedViewController: UIViewController {
     
-    var postButton: UIButton!
-    
-    var post = Post()
-    
-    override func loadView() {
-        view = UIView()
-        
-        postButton = UIButton()
-        //postButton.translatesAutoresizingMaskIntoConstraints = false
-        postButton.backgroundColor = .systemRed
-        postButton.layer.borderWidth = 1
-        postButton.layer.cornerRadius = 5
-        postButton.frame = CGRect(x: 20, y: 200, width: 300, height: 50)
-        postButton.setTitle("Пост", for: .normal)
-        postButton.addTarget(self, action: #selector(showPost), for: .touchUpInside)
-        view.addSubview(postButton)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .white
+        title = "Лента"
+        addConstraint()
     }
     
-        @objc func showPost() {
-            let postVC = PostViewController()
-            postVC.post = post
-            self.navigationController?.pushViewController(postVC, animated: true)
-        }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @objc func buttonClicked() {
+        let postViewController = PostViewController()
+        navigationController?.pushViewController(postViewController, animated: true)
     }
-    */
-
+    
+    private lazy var postButton1: UIButton = {
+        let postButton1 = UIButton()
+        postButton1.addTarget(self, action: #selector(bClicked), for: .touchUpInside)
+        postButton1.setTitle("открыть", for: .normal)
+        postButton1.backgroundColor = .systemBlue
+        postButton1.layer.cornerRadius = 10
+        postButton1.translatesAutoresizingMaskIntoConstraints = false
+        return postButton1
+    }()
+    
+    private lazy var postButton2: UIButton = {
+        let postButton2 = UIButton()
+        postButton2.addTarget(self, action: #selector(bClicked), for: .touchUpInside)
+        postButton2.setTitle("открыть2", for: .normal)
+        postButton2.backgroundColor = .systemBlue
+        postButton2.layer.cornerRadius = 10
+        postButton2.translatesAutoresizingMaskIntoConstraints = false
+        return postButton2
+    }()
+    
+    private lazy var buttonStackView: UIStackView = {
+        let buttonStackView = UIStackView()
+        buttonStackView.axis = .vertical
+        buttonStackView.distribution = .fillEqually
+        buttonStackView.spacing = 10
+        buttonStackView.translatesAutoresizingMaskIntoConstraints = false
+        return buttonStackView
+    }()
+    
+    @objc func bClicked() {
+        let postViewController = PostViewController()
+        navigationController?.pushViewController(postViewController, animated: true)
+    }
+    
+    private func addConstraint() {
+        
+        var constraints = [NSLayoutConstraint]()
+        view.addSubview(buttonStackView)
+        buttonStackView.addArrangedSubview(postButton1)
+        buttonStackView.addArrangedSubview(postButton2)
+        constraints.append(buttonStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor))
+        constraints.append(buttonStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor))
+        constraints.append(buttonStackView.widthAnchor.constraint(equalToConstant: 150))
+        constraints.append(buttonStackView.heightAnchor.constraint(equalToConstant: 90))
+        NSLayoutConstraint.activate(constraints)
+    }
 }
+
+/*struct Post {
+    
+    let title:String = "Пост"
+}
+*/

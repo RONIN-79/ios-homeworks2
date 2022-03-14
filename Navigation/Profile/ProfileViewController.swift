@@ -112,10 +112,10 @@ class ProfileViewController: UIViewController {
     }
     
     private func addDataSource() {
-        self.dataSource.append(.init(author: "Steam Jet выступили с \"шестым игроком\" ", description: "Концерт Steam Jet в клубе Action состоялся с двумя басистами. Курьёз произошёл по причине того, что оригинального басиста изначально должен был заменить \"шестой полевой\" музыкант - Александр Мутин. Однако, как оказалось позже, Владимир Пакин всё же смог дать концерт и, чтобы не нарушать обещание, Александр сыграл с группой несколько композиций.", image: "Pic1", likes: 25, views: 30))
-        self.dataSource.append(.init(author: "Поздравляем с пополнением!", description: "У басиста группы Steam Jet Владимира Пакина на днях произошло пополнение в семействе - у него родился сын! Мальчика назвали Платоном - в честь кого, пока непонятно. Напомним, что Владимир сам работает акушером-гинекологом и на его счету не один десяток рождённый малыш.", image: "Pic2", likes: 23, views: 28))
-        self.dataSource.append(.init(author: "С обновлением!", description: "Ритм-гитарист Steam Jet Павел Власов недавно приобрёл новую гитару. Интересно то, что гитара старше него самого почти на пятнадцать лет! Желаем Павлу крепких струн и чтобы Хэтфилд обзавидовался!", image: "Pic3", likes: 15, views: 18))
-                
+        self.dataSource.append(.init(author: "ОБМЕН", description: "Обмен газа на недвижимость", image: "Pic1", likes: 25, views: 30))
+        self.dataSource.append(.init(author: "McDonalds", description: "Ребрендинг Макдональдса", image: "Pic2", likes: 23, views: 28))
+        self.dataSource.append(.init(author: "ЗДОРОВЬЕ!", description: "С уходом иностранных компаний, мы точно будем здоровыми", image: "Pic3", likes: 15, views: 18))
+        self.dataSource.append(.init(author: "McDonalds-2", description: "Ребрендинг Макдональдса часть 2", image: "Pic4", likes: 30, views: 30))
     }
     
     @objc func didTapSetTitleButton() {

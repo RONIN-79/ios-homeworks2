@@ -2,7 +2,7 @@
 //  Setupable.swift
 //  Navigation
 //
-//  Created by MacBook on 14.03.2022.
+//  Created by Руфат Багирли on 14.03.2022.
 //
 
 import Foundation

@@ -2,7 +2,7 @@
 //  ProfileHeaderView.swift
 //  Navigation
 //
-//  Created by MacBook on 20.02.2022.
+//  Created by Руфат Багирли on 20.02.2022.
 //
 
 import UIKit
@@ -23,7 +23,7 @@ class ProfileHeaderView: UIView {
     private lazy var name: UILabel = {
         let name = UILabel()
         name.text = "Ждун"
-        name.font = .systemFont(ofSize: 35, weight: .bold)
+        name.font = .systemFont(ofSize: 25, weight: .bold)
         name.adjustsFontSizeToFitWidth = true
         name.minimumScaleFactor = 0.5
         self.addSubview(name)
@@ -34,7 +34,7 @@ class ProfileHeaderView: UIView {
     private lazy var status: UITextView = {
         let status = UITextView()
         status.backgroundColor = .systemGray2
-        status.font = .systemFont(ofSize: 20)
+        status.font = .systemFont(ofSize: 15)
         status.textColor = .systemGray
         status.text = "статус"
         status.translatesAutoresizingMaskIntoConstraints = false
@@ -64,12 +64,15 @@ class ProfileHeaderView: UIView {
         let showButton = UIButton()
         showButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         showButton.setTitle("Создать статус", for: .normal)
+        showButton.setTitleColor(.white, for: .normal)
         showButton.backgroundColor = .systemBlue
-        showButton.layer.cornerRadius = 7
+        showButton.layer.cornerRadius = 4
         showButton.layer.shadowColor = UIColor.black.cgColor
-        showButton.layer.shadowOffset = CGSize(width: 5, height: 5)
-        showButton.layer.shadowRadius = 5
-        showButton.layer.shadowOpacity = 0.3
+        showButton.layer.shadowOffset.width = 4
+        showButton.layer.shadowOffset.height = 4
+        showButton.layer.shadowRadius = 4
+        showButton.layer.shadowColor = UIColor.black.cgColor
+        showButton.layer.shadowOpacity = 0.7
         showButton.translatesAutoresizingMaskIntoConstraints = false
         return showButton
     }()
@@ -83,9 +86,13 @@ class ProfileHeaderView: UIView {
         return newButton
     }()*/
     
-    let avatarImage: UIImageView = {
+    private lazy var avatarImage: UIImageView = {
         let portrait = UIImage(named: "portrait")
         let avatarImage = UIImageView(image: portrait)
+        avatarImage.layer.cornerRadius = 40
+        avatarImage.layer.borderWidth = 3
+        avatarImage.clipsToBounds = true
+        avatarImage.layer.borderColor = UIColor.white.cgColor
         avatarImage.translatesAutoresizingMaskIntoConstraints = false
         return avatarImage
     }()
@@ -95,13 +102,13 @@ class ProfileHeaderView: UIView {
         status.textColor = .black
         textField.text = ""
         UIView.animate(withDuration: 1.0) {
-            self.showButton.frame = CGRect(x: 205, y: 320, width: 160, height: 50)
+            self.showButton.frame = CGRect(x: 205, y: 170, width: 160, height: 50)
             self.textField.alpha = 1
             self.endEditing(true)
             if self.status.hasText {
                 self.showButton.setTitle("Изменить статус", for: .normal)
                 self.textField.alpha = 0
-                self.showButton.frame = CGRect(x: 205, y: 270, width: 160, height: 50)
+                self.showButton.frame = CGRect(x: 205, y: 150, width: 160, height: 50)
             }
         }
     }
@@ -130,7 +137,7 @@ class ProfileHeaderView: UIView {
 
         var constraints = [NSLayoutConstraint]()
         
-        constraints.append(avatarImage.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 10))
+        constraints.append(avatarImage.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 20))
         constraints.append(avatarImage.leadingAnchor.constraint(greaterThanOrEqualTo: self.leadingAnchor, constant: 20))
         constraints.append(avatarImage.trailingAnchor.constraint(greaterThanOrEqualTo: self.trailingAnchor, constant: -240))
         constraints.append(avatarImage.bottomAnchor.constraint(lessThanOrEqualTo: self.safeAreaLayoutGuide.bottomAnchor, constant: 400))
@@ -140,7 +147,7 @@ class ProfileHeaderView: UIView {
         constraints.append(labelStackView.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor, constant: -20))
         constraints.append(labelStackView.bottomAnchor.constraint(lessThanOrEqualTo: self.safeAreaLayoutGuide.bottomAnchor, constant: 450))
         
-        constraints.append(textField.topAnchor.constraint(equalTo: labelStackView.bottomAnchor, constant: 20))
+        constraints.append(textField.topAnchor.constraint(equalTo: labelStackView.bottomAnchor, constant: 10))
         constraints.append(textField.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: 30))
         constraints.append(textField.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor, constant: -30))
         constraints.append(textField.bottomAnchor.constraint(lessThanOrEqualTo: self.safeAreaLayoutGuide.bottomAnchor, constant: 350))

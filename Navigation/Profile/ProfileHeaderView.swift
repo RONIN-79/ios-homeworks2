@@ -2,105 +2,180 @@
 //  ProfileHeaderView.swift
 //  Navigation
 //
-//  Created by MacBook on 20.02.2022.
+//  Created by Руфат Багирли on 20.02.2022.
 //
 
 import UIKit
 
-class ProfileHeaderView: UIView {
+class ProfileHeaderView: UIView, UITextFieldDelegate {
+    
+    private lazy var avatarImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "portrait")
+        imageView.layer.cornerRadius = 40
+        imageView.layer.borderWidth = 3
+        imageView.clipsToBounds = true
+        imageView.layer.borderColor = UIColor.white.cgColor
+        return imageView
+    }()
+    
+    private lazy var fullNameLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        label.text = titleText
+        label.textAlignment = .left
+        return label
+    }()
+    
+    private lazy var statusLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        label.textColor = .gray
+        label.text = statusText
+        return label
+    }()
+    
+    private lazy var setStatusButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Показать статус", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .systemBlue
+        button.layer.cornerRadius = 4
+        button.layer.shadowOffset.width = 4
+        button.layer.shadowOffset.height = 4
+        button.layer.shadowRadius = 4
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.7
+        button.addTarget(self, action: #selector(didTapStatusButton), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var statusTextField: UITextField = {
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        textField.textColor = .black
+        textField.layer.cornerRadius = 12
+        textField.layer.masksToBounds = true
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.black.cgColor
+        textField.isHidden = true
+        return textField
+    }()
+    
+    private lazy var labelsStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.spacing = 10
+        return stackView
+    }()
+    
+    private lazy var infoStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.spacing = 20
+        return stackView
+    }()
+    
+    private var statusText: String = "Ожидайте..."
+    private var titleText: String = "Ждун"
+    private var setStatusButtonTopConstraint: NSLayoutConstraint?
+    private var setStatusButtonBottomConstraint: NSLayoutConstraint?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
-        let tap = UITapGestureRecognizer(target: self, action: #selector(tap(_:)))
-        self.addGestureRecognizer(tap)
-    
+        self.statusTextField.delegate = self
+        self.drawSelf()
+        
     }
     
-
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
+        fatalError("init(coder:) has not been implemented")
     }
     
-    let textField = UITextField(frame: CGRect(x: 200, y: 360, width: 190, height: 50))
-    let showButton = UIButton(frame: CGRect(x: 55, y: 400, width: 300, height: 60))
-    let status = UITextView(frame: CGRect(x: 200, y: 290, width: 190, height: 50))
-
-    
-    private func setupView() {
+    private func drawSelf(){
         
-        let profileImage = UIImage(named: "portrait")
-        let profileImageView = UIImageView(image: profileImage)
-        profileImageView.frame = CGRect(x: 35, y: 150, width: 150, height: 200)
-        self.addSubview(profileImageView)
-
+        self.addSubview(self.infoStackView)
+        self.addSubview(self.setStatusButton)
+        self.addSubview(self.statusTextField)
+        self.infoStackView.addArrangedSubview(self.avatarImageView)
+        self.infoStackView.addArrangedSubview(self.labelsStackView)
+        self.labelsStackView.addArrangedSubview(self.fullNameLabel)
+        self.labelsStackView.addArrangedSubview(self.statusLabel)
         
-        let name = UILabel(frame: CGRect(x: 215, y: 190, width: 200, height: 80))
-        name.text = "Ждун"
-        name.font = .systemFont(ofSize: 35, weight: .bold)
-        name.adjustsFontSizeToFitWidth = true
-        name.minimumScaleFactor = 0.5
-        self.addSubview(name)
+        let infoStackViewTopConstraint = self.infoStackView.topAnchor.constraint(equalTo: self.topAnchor)
+        let infoStackViewBottomConstraint = self.infoStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -105)
+        let infoStackViewLeadingConstraint = self.infoStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20)
+        let infoStackViewTrailingConstraint = self.infoStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20)
         
-        textField.placeholder = "Укажите статус..."
-        textField.adjustsFontSizeToFitWidth = true
-        textField.minimumFontSize = 0.5
-        textField.returnKeyType = .done
-        textField.autocapitalizationType = .words
-        textField.font = .systemFont(ofSize: 15)
-        textField.textColor = .systemGray2
-        textField.backgroundColor = .systemGray4
-        textField.borderStyle = .roundedRect
-        textField.returnKeyType = .next
-        textField.keyboardType = .default
-        textField.clearButtonMode = .always
-        textField.alpha = 0
-        self.addSubview(textField)
-
-        showButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-        showButton.setTitle("Создать статус", for: .normal)
-        showButton.backgroundColor = .systemBlue
-        showButton.layer.cornerRadius = 7
-        showButton.layer.shadowColor = UIColor.black.cgColor
-        showButton.layer.shadowOffset = CGSize(width: 5, height: 5)
-        showButton.layer.shadowRadius = 5
-        showButton.layer.shadowOpacity = 0.3
-        self.addSubview(showButton)
-
+        let avatarImageViewAspectRatioConstraint = self.avatarImageView.heightAnchor.constraint(equalTo: self.avatarImageView.widthAnchor, multiplier: 1.0)
         
-        status.backgroundColor = .systemGray2
-        status.font = .systemFont(ofSize: 20)
-        status.textColor = .systemGray
-        status.text = "статус"
-        self.addSubview(status)
+        self.setStatusButtonTopConstraint = self.setStatusButton.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 10)
+        let setStatusButtonLeadingConstraint = self.setStatusButton.leadingAnchor.constraint(equalTo: self.infoStackView.leadingAnchor)
+        let setStatusButtonTrailingConstraint = self.setStatusButton.trailingAnchor.constraint(equalTo: self.infoStackView.trailingAnchor)
+        let setStatusButtonHeightConstraint = self.setStatusButton.heightAnchor.constraint(equalToConstant: 50)
+        
+        let statusTextFieldTopConstraint = self.statusTextField.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 10)
+        let statusTextFieldLeadingConstraint = self.statusTextField.leadingAnchor.constraint(equalTo: self.statusLabel.leadingAnchor)
+        let statusTextFieldTrailingConstraint = self.statusTextField.trailingAnchor.constraint(equalTo: self.infoStackView.trailingAnchor)
+        let statusTextFieldHeightConstraint = self.statusTextField.heightAnchor.constraint(equalToConstant: 35)
+        
+        NSLayoutConstraint.activate([
+            infoStackViewTopConstraint,
+            infoStackViewBottomConstraint,
+            infoStackViewLeadingConstraint,
+            infoStackViewTrailingConstraint,
+            
+            avatarImageViewAspectRatioConstraint,
+            
+            self.setStatusButtonTopConstraint,
+            setStatusButtonLeadingConstraint,
+            setStatusButtonTrailingConstraint,
+            setStatusButtonHeightConstraint,
+            
+            statusTextFieldTopConstraint,
+            statusTextFieldLeadingConstraint,
+            statusTextFieldTrailingConstraint,
+            statusTextFieldHeightConstraint
+        ].compactMap({$0}))
     }
-
-    @objc func buttonPressed() {
-        status.text = textField.text
-        status.textColor = .black
-        textField.text = ""
-        UIView.animate(withDuration: 1.0) {
-            self.showButton.frame = CGRect(x: 55, y: 428, width: 300, height: 60)
-            self.textField.alpha = 1
-            self.endEditing(true)
-            if self.status.hasText {
-                self.showButton.setTitle("Изменить статус", for: .normal)
-                self.textField.alpha = 0
-                self.showButton.frame = CGRect(x: 55, y: 400, width: 300, height: 60)
+    
+    func hideKeyboard() {
+        self.statusTextField.resignFirstResponder()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        hideKeyboard()
+        return true
+    }
+    
+    @objc private func didTapStatusButton() {
+        if self.statusTextField.isHidden {
+            self.setStatusButtonBottomConstraint = self.setStatusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            NSLayoutConstraint.deactivate([self.setStatusButtonTopConstraint].compactMap({$0}))
+            NSLayoutConstraint.activate([self.setStatusButtonBottomConstraint].compactMap({$0}))
+            self.statusTextField.isHidden = false
+        } else {
+            self.setStatusButtonTopConstraint = self.setStatusButton.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 10)
+            NSLayoutConstraint.deactivate([self.setStatusButtonBottomConstraint].compactMap({$0}))
+            NSLayoutConstraint.activate([self.setStatusButtonTopConstraint].compactMap({$0}))
+            self.statusTextField.isHidden = true
+            self.statusLabel.text = self.statusTextField.text
+            if self.statusLabel.text == "" {
+                self.statusLabel.text = self.statusText
             }
         }
     }
-    @objc func tap(_ sender: Any) {
-        textField.resignFirstResponder()
+    
+    func changeTitle(title: String) {
+        self.fullNameLabel.text = title
     }
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-
 }
 

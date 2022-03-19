@@ -14,7 +14,6 @@
 		FA08D4A227C13DC600236212 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA08D4A027C13DC600236212 /* LaunchScreen.storyboard */; };
 		FA21AE5627C2CC180040F5BD /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA21AE5527C2CC180040F5BD /* ProfileHeaderView.swift */; };
 		FADA5A6627C26510008F6FA1 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA5A6527C26510008F6FA1 /* TabBarController.swift */; };
-		FADA5A6827C266A0008F6FA1 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA5A6727C266A0008F6FA1 /* Post.swift */; };
 		FADA5A6A27C26832008F6FA1 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA5A6927C26832008F6FA1 /* FeedViewController.swift */; };
 		FADA5A6C27C2699A008F6FA1 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA5A6B27C2699A008F6FA1 /* PostViewController.swift */; };
 		FADA5A6E27C26AC1008F6FA1 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA5A6D27C26AC1008F6FA1 /* ProfileViewController.swift */; };
@@ -30,7 +29,6 @@
 		FA08D4A327C13DC600236212 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA21AE5527C2CC180040F5BD /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		FADA5A6527C26510008F6FA1 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		FADA5A6727C266A0008F6FA1 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		FADA5A6927C26832008F6FA1 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		FADA5A6B27C2699A008F6FA1 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		FADA5A6D27C26AC1008F6FA1 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -72,7 +70,6 @@
 				FADA5A6927C26832008F6FA1 /* FeedViewController.swift */,
 				FA08D49727C13DC500236212 /* SceneDelegate.swift */,
 				FA08D49927C13DC500236212 /* InfoViewController.swift */,
-				FADA5A6727C266A0008F6FA1 /* Post.swift */,
 				FADA5A6527C26510008F6FA1 /* TabBarController.swift */,
 				FA08D49E27C13DC600236212 /* Assets.xcassets */,
 				FA08D4A027C13DC600236212 /* LaunchScreen.storyboard */,
@@ -168,7 +165,6 @@
 				FA08D49827C13DC500236212 /* SceneDelegate.swift in Sources */,
 				FADA5A6A27C26832008F6FA1 /* FeedViewController.swift in Sources */,
 				FADA5A6E27C26AC1008F6FA1 /* ProfileViewController.swift in Sources */,
-				FADA5A6827C266A0008F6FA1 /* Post.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

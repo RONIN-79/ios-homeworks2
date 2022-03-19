@@ -11,41 +11,29 @@ class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .systemOrange
-        UITabBar.appearance().barTintColor = .systemBackground
-        tabBar.tintColor = .label
-        setupVCs()
+        view.backgroundColor = .systemGray
+        setupTabBar()
     }
     
-    fileprivate func createNavController(for rootViewController: UIViewController,
-                                         title: String,
-                                         image: UIImage) -> UIViewController {
-        let navController = UINavigationController(rootViewController: rootViewController)
-        navController.tabBarItem.title = title
-        navController.tabBarItem.image = image
-        navController.navigationBar.prefersLargeTitles = true
-        rootViewController.navigationItem.title = title
+    func setupTabBar() {
+        
+        let feedViewController = createNavController(vc: FeedViewController(), itemName: "Feed", ItemImage: "arrow.up.arrow.down")
+        
+        let profileViewController = createNavController(vc: ProfileViewController(), itemName: "Profile", ItemImage: "person.crop.rectangle")
+
+        viewControllers = [feedViewController, profileViewController]
+        
+    }
+    
+    
+    func createNavController(vc: UIViewController, itemName: String, ItemImage: String) -> UINavigationController {
+        
+        let item = UITabBarItem(title: itemName, image: UIImage(systemName: ItemImage)?.withAlignmentRectInsets(.init(top: 10, left: 0, bottom: 0, right: 0))  ,tag: 0)
+        item.titlePositionAdjustment = .init(horizontal: 0, vertical: 10)
+        
+        let navController = UINavigationController(rootViewController: vc)
+        navController.tabBarItem = item
+        
         return navController
     }
-    
-    func setupVCs() {
-        viewControllers = [
-            createNavController(for: FeedViewController(), title: NSLocalizedString("Главное", comment: ""), image: UIImage(systemName: "house")!),
-            createNavController(for: ProfileViewController(), title: NSLocalizedString("Профиль", comment: ""), image: UIImage(systemName: "person")!)
-        ]
-        // Do any additional setup after loading the view.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

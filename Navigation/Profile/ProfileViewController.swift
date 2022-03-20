@@ -10,16 +10,15 @@ import UIKit
 class ProfileViewController: UIViewController {
     
     private lazy var profileHeaderView: ProfileHeaderView = {
-        let profileHearderView = ProfileHeaderView(frame: .zero)
-        profileHearderView.translatesAutoresizingMaskIntoConstraints = false
-        profileHearderView.backgroundColor = .lightGray
-        return profileHearderView
+        let view = ProfileHeaderView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     private lazy var setTitleButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Установить заголовок", for: .normal)
+        button.setTitle("Укажите заголовок", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .systemBlue
         button.layer.cornerRadius = 4
@@ -29,18 +28,14 @@ class ProfileViewController: UIViewController {
     
     private var heightConstraint: NSLayoutConstraint?
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Профиль"
-        view.addSubview(profileHeaderView)
+        
         profileHeaderViewSetup()
         setTitleButtonSetup()
-
-
-        // Do any additional setup after loading the view.
+        
     }
-    
+
     private func profileHeaderViewSetup() {
         self.view.backgroundColor = .white
         self.view.addSubview(self.profileHeaderView)
@@ -76,13 +71,13 @@ class ProfileViewController: UIViewController {
     }
     
     @objc func didTapSetTitleButton() {
-        let ac = UIAlertController(title: "Установить заголовок", message: "Ввести новый заголовок", preferredStyle: .alert)
+        let ac = UIAlertController(title: "Установить заголовок", message: "Введите новый заголовок", preferredStyle: .alert)
         ac.addTextField()
         
         let okAction = UIAlertAction(title: "Ок", style: .default) { [weak self, weak ac] _ in
             guard let newTitle = ac?.textFields?[0].text else {return}
             if newTitle.isEmpty {
-                let ac = UIAlertController(title: "Введите что-нибудь", message: nil, preferredStyle: .alert)
+                let ac = UIAlertController(title: "Вы должны ввести что нибудь", message: nil, preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "Ок", style: .default, handler: nil)
                 ac.addAction(okAction)
                 self?.present(ac, animated: true)
@@ -100,23 +95,4 @@ class ProfileViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-    
 }
-
-
-
-
-    
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-

@@ -9,40 +9,31 @@ import UIKit
 
 class InfoViewController: UIViewController {
         
-        private lazy var alertButton: UIButton = {
-            let button = UIButton()
-            button.translatesAutoresizingMaskIntoConstraints = false
-            button.setTitle("Показать оповещение", for: .normal)
-            button.setTitleColor(.black, for: .normal)
-            button.layer.borderWidth = 1
-            button.layer.cornerRadius = 5
-            button.backgroundColor = .yellow
-            button.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
-            
-            return button
-        }()
-
-        override func viewDidLoad() {
-            super.viewDidLoad()
-            
-            view.backgroundColor = .systemBlue
-            view.addSubview(alertButton)
-            
-            alertButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50).isActive = true
-            alertButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-            alertButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-            alertButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-
-            // Do any additional setup after loading the view.
-        }
-        
-        @objc private func showAlert() {
-            let ac = UIAlertController(title: "Оповещение", message: "Тестовое оповещение", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "Тест", style: .default, handler: { _ in print("Вы выиграли")
-            }))
-            ac.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
-            present(ac, animated: true)
-        }
-        
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .systemGreen
+        title = "Инфо"
+        let button = UIButton(frame: CGRect(x: 130, y: 770, width: 150, height: 40))
+        view.addSubview(button)
+        button.setTitle("Показывать оповещение", for: .normal)
+        button.backgroundColor = .systemBlue
+        button.layer.cornerRadius = 10
+        button.addTarget(self, action: #selector(alertClicked), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 90).isActive = true
+        button.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -90).isActive = true
+        button.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -90).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 40).isActive = true
+    }
+    
+    @objc func alertClicked() {
+        let alert = UIAlertController(title: "Внимание", message: "Сообщение", preferredStyle: .alert)
+        let okBtn = UIAlertAction(title: "Да", style: .default, handler: nil)
+        let noBtn = UIAlertAction(title: "Нет", style: .destructive, handler: nil)
+        alert.addAction(okBtn)
+        alert.addAction(noBtn)
+        present(alert, animated: true, completion: nil)
+        print("работа по оповещению")
+    }        
 }
 
